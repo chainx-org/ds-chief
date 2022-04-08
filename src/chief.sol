@@ -65,7 +65,7 @@ contract DSChiefApprovals is DSThing {
         public
         note
     {
-        last[msg.sender] = block.number;
+        last[msg.sender] = block.timestamp;
         GOV.pull(msg.sender, wad);
         IOU.mint(msg.sender, wad);
         deposits[msg.sender] = add(deposits[msg.sender], wad);
@@ -76,7 +76,7 @@ contract DSChiefApprovals is DSThing {
         public
         note
     {
-        require(block.number > last[msg.sender]);
+        require(block.timestamp > (last[msg.sender] + 60));
         deposits[msg.sender] = sub(deposits[msg.sender], wad);
         subWeight(wad, votes[msg.sender]);
         IOU.burn(msg.sender, wad);
